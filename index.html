@@ -9,7 +9,28 @@
   <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-  <h1>Traxx</h1>
+  <video id="background-video" autoplay loop muted poster="./assets/images/pexels-crazy-motions-8733062.mp4">
+    <source src="./assets/images/pexels-crazy-motions-8733062.mp4" type="video/mp4">
+  </video>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid justify-content-center">
+      <a class="navbar-brand" href="#">Traxx - Music Search Software</a>
+    </div>
+  </nav>
+  <div class="container-fluid d-flex vh-100 align-items-center justify-content-center">
+    <div class="card text-white bg-dark rounded" style="width: 60%; height: 30%;">
+      <div class="card-body">
+        <h4 class="card-title mb-0 text-center">Search a Track or Artist</h4>
+        <div class="form-group d-flex justify-content-center mt-5">
+          <label class="col-form-label mt-0" for="inputDefault"></label>
+          <input type="text" class="form-control mt-0 text-center rounded" style="width:70%" placeholder="Toxic Britney Spears" id="inputDefault">
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+        <button type="button" class="btn btn-outline-light text rounded" style="width:50%;">Submit</button>
+      </div>
+      </div>
+    </div>
+</div>
   <script src="./assets/js/script.js"></script>
 </body>
 </html>
