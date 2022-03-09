@@ -71,22 +71,47 @@ var fetchLyrics = function (trackID) {
           var trackHeaderEl = document.createElement('h2');
           var trackArtistEl = document.createElement('p');
           var trackLyricsEl = document.createElement('p');
-          var videoEl = document.createElement('iframe')
           // Adding classes
           trackEl.classList.add('track');
           trackHeaderEl.classList.add('track-header');
           trackArtistEl.classList.add('tract-artist');
           trackLyricsEl.classList.add('.track-text');
-          videoEl.classList.add('.video');
-          videoEl.src = 'https://www.youtube.com/watch?v=EDQVDCsrFAE';
           // Adding text content - replace with data from API pull
           trackHeaderEl.textContent = 'Toxic';
           trackArtistEl.textContent = 'Britney Spears';
           trackLyricsEl.textContent = 'Lorem ipsisjw iwfwjjrwijjijvjrij ivjijis djivjijvisje ijwiejgfisih sdcfaehfhsfi sifhhfisdhfi  shfhifosh hosdhgo';
           // Appending elements
-          trackEl.append(trackHeaderEl, trackLyricsEl);
-          trackContainerEl.append(trackEl)
+          trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
+          trackContainerEl.append(trackEl);
         };
+      });
+    }});
+};
+
+var fetchVideo = function (variable) {
+  // Element container to attach track information
+  var trackContainerEl = document.querySelector('.track-container');
+
+  // Need variable to pass into Youtube search function
+
+  // Search for lyrics URL template
+  var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
+  
+  // Fetching data from Musixmatch for search results
+  fetch (apiVideo)
+    .then(function (response) {
+      if (response.ok) {
+      response.json()
+      .then(function (data) {
+        console.log(data.length);
+        // Creating video element
+        var videoEl = document.createElement('iframe')
+        // Adding attributes
+        videoEl.classList.add('.video');
+        videoEl.src = 'https://www.youtube.com/watch?v=EDQVDCsrFAE';
+        // Appending elements
+        trackContainerEl.append(videoEl)
+        
       });
     }});
 };
