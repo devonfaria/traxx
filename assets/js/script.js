@@ -6,22 +6,26 @@ var formEl = document.querySelector('#form');
 var handleSubmission = function (event) {
   event.preventDefault();
   // removes HTML from results container
-  // document.querySelector('#').innerHTML = '';
   var search = inputEl.value.trim();
-  console.log(search);
+  search=search.replace(" ","%20");
   // Translates city name to coordinates
+  console.log(search);
+  
+  // NEED TO CHANGE TO SECOND HTML PAGE
+  // location.replace('search-results.html');
+  // document.querySelector('#searchContainer').innerHTML = '';
   fetchTrackID(search);
 };
 
 // SEARCH FOR RESULTS
-var fetchTrackID = function (artist, song) {
+var fetchTrackID = function (searchTerms) {
   // Element container to attach results
   var resultContainerEl = document.querySelector('.result-container');
 
   // Search track URL template
-  // var apiTrackID = `http://api.musixmatch.com/ws/1.1/track.search?apikey=fe0a8c874884f61f197aa259a3450876&q_artist=${artist}&q_track=${song}&page_size=20`;
+  var apiTrackID = `http://api.musixmatch.com/ws/1.1/track.search?apikey=fe0a8c874884f61f197aa259a3450876&q${searchTerms}&page_size=20`;
 
-  var apiTrackID = `https://api.musixmatch.com/ws/1.1/track.search?apikey=fe0a8c874884f61f197aa259a3450876&q_artist=Ariana%20Grande&q_track=God%20is%20a%20woman&page_size=2`;
+  // var apiTrackID = `https://api.musixmatch.com/ws/1.1/track.search?apikey=fe0a8c874884f61f197aa259a3450876&q_artist=Ariana%20Grande&q_track=God%20is%20a%20woman&page_size=2`;
 
   
   // Fetching data from Musicmatch for search results; returning trackID
