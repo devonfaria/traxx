@@ -1,13 +1,16 @@
 var containerEL = document.querySelector('.results-container');
+var inputEl = document.querySelector('#inputDefault');
+var formEl = document.querySelector('#form');
 
 // DEFINING FUNCTIONS
 var handleSubmission = function (event) {
   event.preventDefault();
-  // removes HTML from weather bar
-  document.querySelector('.weather-bar').innerHTML = '';
-  var city = cityInputEl.value.trim();
+  // removes HTML from results container
+  // document.querySelector('#').innerHTML = '';
+  var search = inputEl.value.trim();
+  console.log(search);
   // Translates city name to coordinates
-  getCoordinates(city);
+  fetchTrackID(search);
 };
 
 // SEARCH FOR RESULTS
@@ -47,7 +50,6 @@ var fetchTrackID = function (artist, song) {
       });
     }});
 };
-fetchTrackID(); 
 
 var fetchLyrics = function (trackID) {
   // Element container to attach track information
@@ -88,4 +90,5 @@ var fetchLyrics = function (trackID) {
       });
     }});
 };
-fetchLyrics();
+
+formEl.addEventListener('submit', handleSubmission);
