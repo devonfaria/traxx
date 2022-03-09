@@ -1,4 +1,4 @@
-var containerEL = document.querySelector('.results-container');
+var containerEL = document.querySelector('.searchContainer');
 var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
 
