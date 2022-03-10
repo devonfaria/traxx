@@ -2,6 +2,7 @@ var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
 var formOneEl = document.querySelector('#formOne');
 var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
+console.log(previousSearches);
 
 // DEFINING FUNCTIONS
 var handleSubmissionOne = function (event) {
@@ -11,15 +12,14 @@ var handleSubmissionOne = function (event) {
   var search = inputEl.value.trim();
   // Checks if search is original
   if (previousSearches.includes(search)) {
-    search = search.replaceAll(" ", "%20");
+    // search = search.replaceAll(" ", "%20");
+    return
   } else {
     // If unique search, stores to localStorage
     previousSearches.unshift(search);
     var storage = JSON.stringify(previousSearches);
     localStorage.setItem('trackSearches', storage);
-    search = search.replaceAll(" ", "%20")
   }
-  fetchTrackID(search);
 }
 
 var handleSubmission = function (event) {
@@ -92,31 +92,36 @@ var fetchLyrics = function (trackID) {
         response.json()
           .then(function (data) {
             console.log(data);
-            for (var i = 0; i < data.length; i++) {
-              // Creating elements on loop
-              var trackEl = document.createElement('div');
-              var trackHeaderEl = document.createElement('h2');
-              var trackArtistEl = document.createElement('p');
-              var trackLyricsEl = document.createElement('p');
-              // Adding classes
-              trackEl.classList.add('track');
-              trackHeaderEl.classList.add('track-header');
-              trackArtistEl.classList.add('tract-artist');
-              trackLyricsEl.classList.add('.track-text');
-              // Adding text content - replace with data from API pull
-              trackHeaderEl.textContent = 'Toxic';
-              trackArtistEl.textContent = 'Britney Spears';
-              trackLyricsEl.textContent = 'Lorem ipsisjw iwfwjjrwijjijvjrij ivjijis djivjijvisje ijwiejgfisih sdcfaehfhsfi sifhhfisdhfi  shfhifosh hosdhgo';
-              // Appending elements
-              trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
-              trackContainerEl.append(trackEl);
+            if (data.length != 0) {
+              for (var i = 0; i < data.length; i++) {
+                // Creating elements on loop
+                var trackEl = document.createElement('div');
+                var trackHeaderEl = document.createElement('h2');
+                var trackArtistEl = document.createElement('p');
+                var trackLyricsEl = document.createElement('p');
+                // Adding classes
+                trackEl.classList.add('track');
+                trackHeaderEl.classList.add('track-header');
+                trackArtistEl.classList.add('tract-artist');
+                trackLyricsEl.classList.add('track-text');
+                // Adding text content - replace with data from API pull
+                trackHeaderEl.textContent = 'Toxic';
+                trackArtistEl.textContent = 'Britney Spears';
+                trackLyricsEl.textContent = 'Lorem ipsisjw iwfwjjrwijjijvjrij ivjijis djivjijvisje ijwiejgfisih sdcfaehfhsfi sifhhfisdhfi  shfhifosh hosdhgo';
+                // Appending elements
+                trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
+                trackContainerEl.append(trackEl);
+              }
+            }
+          } .catch(function (err) {
+            console.log(err);
+          }))
             };
           });
       }
-    });
-};
 
-var fetchVideo = function (variable) {
+
+var fetchVideo = function (searchTerms) {
   // Element container to attach track information
   var trackContainerEl = document.querySelector('.track-container');
 
@@ -150,5 +155,12 @@ if (formEl !== null) {
 }
 if (formOneEl !== null) {
   formOneEl.addEventListener('submit', handleSubmission);
+}
+
+// Conditional to check if we are on the search results page to call
+if (location.pathname.includes('search-results.html')) {
+  var searchTerm = previousSearches[0].replaceAll(' ', '%20');
+  console.log(searchTerm);
+  fetchTrackID(searchTerm);
 }
 
