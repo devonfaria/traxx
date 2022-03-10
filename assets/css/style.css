@@ -3,7 +3,7 @@
 }
 
 .rounded {
-  border-radius: .6rem!important;
+  border-radius: 0.6rem !important;
 }
 
 #background-video {
@@ -16,4 +16,16 @@
   top: 0;
   bottom: 0;
   z-index: -1;
+}
+
+.cardHead {
+  font-size: 24px;
+}
+
+.cardLyrics {
+  font-size: 16px;
+}
+
+a {
+  text-decoration: none;
 }
