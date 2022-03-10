@@ -5,7 +5,7 @@ var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
 // DEFINING FUNCTIONS
 var handleSubmission = function (event) {
   event.preventDefault();
-  document.location()
+  location.replace("search-results.html");
   // removes HTML from results container
   var search = inputEl.value.trim();
   // Checks if search is original
@@ -37,8 +37,6 @@ var fetchTrackID = function (searchTerm) {
         for (var i = 0; i < data.length; i++) {
           // Creating elements on loop
           console.log(data);
-          var lyrics = fetchLyrics(data[i].track.track_id);
-          console.log(lyrics);
           var resultEl = document.createElement('div');
           var resultHeaderEl = document.createElement('h2');
           var resultTextEl = document.createElement('p');
