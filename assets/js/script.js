@@ -1,4 +1,3 @@
-var containerEL = document.querySelector('.searchContainer');
 var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
 var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
@@ -6,8 +5,8 @@ var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
 // DEFINING FUNCTIONS
 var handleSubmission = function (event) {
   event.preventDefault();
+  document.location()
   // removes HTML from results container
-  // document.querySelector('#').innerHTML = '';
   var search = inputEl.value.trim();
   // Checks if search is original
     if (previousSearches.includes(search)) {
@@ -23,17 +22,12 @@ var handleSubmission = function (event) {
 };
 
 // SEARCH FOR RESULTS
-var fetchTrackID = function (search) {
-  console.log('Fetch Tract ID triggered!', search);
+var fetchTrackID = function (searchTerm) {
   // Element container to attach results
-  var resultContainerEl = document.querySelector('.result-container');
-
+  var resultContainerEl = document.querySelector('#searchContainer');
   // Search track URL template
-  var apiTrackID = `https://devon-and-david-20220309.herokuapp.com/track.search?&q_track=${search}&page_size=20`;
-  console.log('API url: ' + apiTrackID);
-  // var apiTrackID = `https://devon-and-david-20220309.herokuapp.com/track.search?q_artist=Ariana%20Grande&q_track=God%20is%20a%20woman&page_size=20`;
+  var apiTrackID = `https://devon-and-david-20220309.herokuapp.com/track.search?q_track=${searchTerm}&page_size=20`;
 
-  
   // Fetching data from Musicmatch for search results; returning trackID
   fetch (apiTrackID)
     .then(function (response) {
@@ -42,6 +36,9 @@ var fetchTrackID = function (search) {
       .then(function (data) {
         for (var i = 0; i < data.length; i++) {
           // Creating elements on loop
+          console.log(data);
+          var lyrics = fetchLyrics(data[i].track.track_id);
+          console.log(lyrics);
           var resultEl = document.createElement('div');
           var resultHeaderEl = document.createElement('h2');
           var resultTextEl = document.createElement('p');
@@ -50,8 +47,8 @@ var fetchTrackID = function (search) {
           resultHeaderEl.classList.add('result-header');
           resultTextEl.classList.add('.result-text')
           // Adding text content - replace with data from API pull
-          resultHeaderEl.textContent = 'Toxic - Britney Spears'; 
-          resultTextEl.textContent = 'Lorem ipsisjw iwfwjjrwijjijvjrij ivjijis djivjijvisje ijwiejgfisih sdcfaehfhsfi sifhhfisdhfi  shfhifosh hosdhgo';
+          resultHeaderEl.textContent = `${data[i].track.track_name} - ${data[i].track.artist_name}`;
+          resultTextEl.textContent = `${lyrics}`;
           // Appending elements
           resultEl.append(resultHeaderEl, resultTextEl);
           resultContainerEl.append(resultEl)
@@ -62,9 +59,7 @@ var fetchTrackID = function (search) {
 };
 
 var fetchLyrics = function (trackID) {
-  console.log('Fetch Lyrics triggered!');
-  var test = trackID;
-  console.log(test);
+  console.log('Fetch Lyrics called');
   // Element container to attach track information
   var trackContainerEl = document.querySelector('.track-container');
 
@@ -77,7 +72,7 @@ var fetchLyrics = function (trackID) {
       if (response.ok) {
       response.json()
       .then(function (data) {
-        console.log(data.length);
+        console.log(data);
         for (var i = 0; i < data.length; i++) {
           // Creating elements on loop
           var trackEl = document.createElement('div');
