@@ -1,52 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Traxx - Music Search Software</title>
-    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./assets/css/style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traxx - Music Search Software</title>
+  <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
 
-  <body class="vh-100 d-flex flex-column">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <div class="container-fluid justify-content-center">
-        <h1 class="navbar-brand">Traxx - Search Results</a>
-      </div>
-    </nav>
-    <div class="row h-100">
-      <aside class="col-4 bg-dark">
-        <form>
-          <div class="form-group">
-            <h4 class="card-title  mb-0 mt-3 text-center text-light">Search a Track or Artist</h4>
-            <div class="form-group d-flex justify-content-center mt-5">
-              <label class="col-form-label mt-0" for="inputDefault"></label>
-              <input type="text" class="form-control mt-0 text-center rounded" style="width:70%"
-                placeholder="Toxic Britney Spears" id="inputDefault">
-            </div>
-        </form>
-        <div class="d-flex justify-content-center mt-3">
+<body class="d-flex flex-column min-vh-100">
+  <nav class="navbar navbar-expand-lg d-flex justify-content-center navbar-dark bg-primary">
+    <h1 class="nav-item title text-light p-3">Traxx - Search Results</h1>
+  </nav>
+  <div class="row w-100 vh-100">
+    <aside class="bg-dark col-2">
+      <form id="form">
+        <div class="form-group">
+          <h4 class="card-title  mb-0 mt-3 text-center text-light">Search a Track or Artist</h4>
+          <div class="form-group d-flex justify-content-center mt-5">
+            <label class="col-form-label mt-0" for="inputDefault"></label>
+            <input type="text" class="form-control mt-0 text-center rounded" style="width:70%"
+              placeholder="Toxic Britney Spears" id="inputDefault">
+          </div>
+          <div class="d-flex justify-content-center my-3">
+            <button type="submit" class="btn btn-outline-light text rounded">Search</button>
+          </div>
+      </form>
+      <div class="d-flex justify-content-center mt-2">
         <a href="index.html" class="text-light">Go Back</a>
       </div>
-      </aside>
-      <div id="searchContainer" class="container col-8">
-       <div class="card border-primary my-3">
-  <div class="card-header cardHead text-center">Toxic Britney Spears</div>
-  <div class="card-body">
-    <h4 class="card-title text-center cardLyrics">Baby, can't you see I'm calling?
-A guy like you should wear a warning
-It's dangerous, I'm falling
-There's no escape, I can't wait
-</h4>
-<div class="d-flex justify-content-center">
-<button type="submit" class="btn btn-outline-primary">See More</button>
-</div> 
-</div>
-</div>
+    </aside>
+    <main id='searchContainer' class="col-10">
+      <div class="card border-primary my-3">
+        <div class="card-header cardHead text-center">Toxic Britney Spears</div>
+        <div class="card-body">
+          <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-outline-primary">See More</button>
+          </div>
+        </div>
       </div>
-      <script src="./assets/js/script.js"></script>
-  </body>
+    </main>
+  </div>
+  <script src="./assets/js/script.js"></script>
+</body>
 
 </html>
