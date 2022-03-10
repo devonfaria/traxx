@@ -1,24 +1,29 @@
 var containerEL = document.querySelector('.searchContainer');
 var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
+var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
 
 // DEFINING FUNCTIONS
 var handleSubmission = function (event) {
   event.preventDefault();
   // removes HTML from results container
   var search = inputEl.value.trim();
-  search=search.replace(" ","%20");
-  // Translates city name to coordinates
-  console.log(search);
-  
-  // NEED TO CHANGE TO SECOND HTML PAGE
-  // location.replace('search-results.html');
-  // document.querySelector('#searchContainer').innerHTML = '';
+  // Checks if search is original
+    if (previousSearches.includes(search)) {
+      search=search.replaceAll(" ","%20");
+    } else {
+      // If unique search, stores to localStorage
+      previousSearches.unshift(search);
+      var storage = JSON.stringify(previousSearches);
+      localStorage.setItem('trackSearches', storage);
+      search=search.replaceAll(" ","%20");
+    }
   fetchTrackID(search);
 };
 
 // SEARCH FOR RESULTS
 var fetchTrackID = function (searchTerms) {
+  console.log('Fetch Tract ID triggered!', search);
   // Element container to attach results
   var resultContainerEl = document.querySelector('.result-container');
 
@@ -34,7 +39,6 @@ var fetchTrackID = function (searchTerms) {
       if (response.ok) {
       response.json()
       .then(function (data) {
-        console.log(data.length);
         for (var i = 0; i < data.length; i++) {
           // Creating elements on loop
           var resultEl = document.createElement('div');
@@ -51,16 +55,20 @@ var fetchTrackID = function (searchTerms) {
           resultEl.append(resultHeaderEl, resultTextEl);
           resultContainerEl.append(resultEl)
         };
+        fetchLyrics(data[0].track.track_id)
       });
     }});
 };
 
 var fetchLyrics = function (trackID) {
+  console.log('Fetch Lyrics triggered!');
+  var test = trackID;
+  console.log(test);
   // Element container to attach track information
   var trackContainerEl = document.querySelector('.track-container');
 
   // Search for lyrics URL template
-  var apiLyrics = `http://api.musixmatch.com/ws/1.1/track.lyrics.get?track_id=${trackID}&apikey=fe0a8c874884f61f197aa259a3450876`;
+  var apiLyrics = `https://devon-and-david-20220309.herokuapp.com/track.lyrics.get?track_id=${trackID}`;
   
   // Fetching data from Musixmatch for search results
   fetch (apiLyrics)
