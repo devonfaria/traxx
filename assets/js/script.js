@@ -1,9 +1,10 @@
 var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
+var formOneEl = document.querySelector('#formOne');
 var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
 
 // DEFINING FUNCTIONS
-var handleSubmission = function (event) {
+var handleSubmissionOne = function (event) {
   event.preventDefault();
   location.replace('search-results.html')
   // removes HTML from results container
@@ -16,7 +17,24 @@ var handleSubmission = function (event) {
     previousSearches.unshift(search);
     var storage = JSON.stringify(previousSearches);
     localStorage.setItem('trackSearches', storage);
+    search = search.replaceAll(" ", "%20")
+  }
+  fetchTrackID(search);
+}
+
+var handleSubmission = function (event) {
+  event.preventDefault();
+  // removes HTML from results container
+  var search = inputEl.value.trim();
+  // Checks if search is original
+  if (previousSearches.includes(search)) {
     search = search.replaceAll(" ", "%20");
+  } else {
+    // If unique search, stores to localStorage
+    previousSearches.unshift(search);
+    var storage = JSON.stringify(previousSearches);
+    localStorage.setItem('trackSearches', storage);
+    search = search.replaceAll(" ", "%20")
   }
   fetchTrackID(search);
 };
@@ -127,4 +145,10 @@ var fetchVideo = function (variable) {
     });
 };
 
-formEl.addEventListener('submit', handleSubmission);
+if (formEl !== null) {
+  formEl.addEventListener('submit', handleSubmissionOne);
+}
+if (formOneEl !== null) {
+  formOneEl.addEventListener('submit', handleSubmission);
+}
+
