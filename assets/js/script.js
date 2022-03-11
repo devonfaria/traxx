@@ -2,6 +2,8 @@ var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
 var formOneEl = document.querySelector('#formOne');
 var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
+var trackName;
+var artistName;
 
 // DEFINING FUNCTIONS
 var handleSubmissionOne = function (event) {
@@ -57,7 +59,6 @@ var fetchTrackID = function (searchTerm) {
       if (response.ok) {
         response.json()
           .then(function (data) {
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
               // Creating elements on loop
               var resultEl = document.createElement('div');
@@ -71,6 +72,7 @@ var fetchTrackID = function (searchTerm) {
               resultBodyEl.classList.add('card-body');
               btnDivEl.classList.add('d-flex', 'justify-content-center')
               resultButtonEl.classList.add('btn', 'btn-outline-primary', 'seeMore')
+              resultButtonEl.setAttribute('id', `${data[i].track.track_name} - ${data[i].track.artist_name}`);
               // Adding text content - replace with data from API pull
               resultHeaderEl.textContent = `${data[i].track.track_name} - ${data[i].track.artist_name}`;
               resultButtonEl.textContent = 'SEE MORE';
@@ -201,6 +203,12 @@ $(document).on('click', '.prevSearch', searchAgain);
 // See More Buttons
 $(document).on('click', '.seeMore', function () {
   console.log('See more clicked!')
-  fetchLyrics();
-  fetchVideo();
+  var videoSearch;
+  videoSearch = inputEl.value.trim();
+  var getID = $(this).attr('id');
+  videoSearch = getID.trim();
+  videoSearch = getID.replaceAll(' ', '_');
+  console.log(videoSearch);
+  // fetchLyrics();
+  fetchVideo(videoSearch);
 });
