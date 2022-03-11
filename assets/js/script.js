@@ -2,6 +2,8 @@ var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
 var formOneEl = document.querySelector('#formOne');
 var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
+var trackName;
+var artistName;
 
 // DEFINING FUNCTIONS
 var handleSubmissionOne = function (event) {
@@ -19,11 +21,13 @@ var handleSubmissionOne = function (event) {
     search = search.replaceAll(" ", "%20");
   }
   fetchTrackID(search);
-}
+};
 
 var handleSubmission = function (event) {
   event.preventDefault();
   // removes HTML from results container
+  var resultContainerEl = document.querySelector('#searchContainer');
+  resultContainerEl.innerHTML = '';
   var search = inputEl.value.trim();
   // Checks if search is original
   var resultsContainerEl = document.querySelector('#searchContainer');
@@ -55,7 +59,6 @@ var fetchTrackID = function (searchTerm) {
       if (response.ok) {
         response.json()
           .then(function (data) {
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
               // Creating elements on loop
               var resultEl = document.createElement('div');
@@ -69,6 +72,7 @@ var fetchTrackID = function (searchTerm) {
               resultBodyEl.classList.add('card-body');
               btnDivEl.classList.add('d-flex', 'justify-content-center')
               resultButtonEl.classList.add('btn', 'btn-outline-primary', 'seeMore')
+              resultButtonEl.setAttribute('id', `${data[i].track.track_name} - ${data[i].track.artist_name}`);
               // Adding text content - replace with data from API pull
               resultHeaderEl.textContent = `${data[i].track.track_name} - ${data[i].track.artist_name}`;
               resultButtonEl.textContent = 'SEE MORE';
@@ -176,7 +180,7 @@ var searchAgain = function (event) {
   var search = $(this).text();
   var searchTerm = search.replaceAll(' ', '%20');
   fetchTrackID(searchTerm);
-}
+};
 
 // Conditional to check if we are on the search results page, if so convert the search into URL format for fetchTrackID function
 if (location.pathname.includes('search-results.html')) {
@@ -193,11 +197,18 @@ if (formOneEl !== null) {
 if (formEl !== null) {
   formEl.addEventListener('submit', handleSubmissionOne);
 }
+
 // Prev. search buttons
 $(document).on('click', '.prevSearch', searchAgain);
 // See More Buttons
 $(document).on('click', '.seeMore', function () {
   console.log('See more clicked!')
-  fetchLyrics();
-  fetchVideo();
+  var videoSearch;
+  videoSearch = inputEl.value.trim();
+  var getID = $(this).attr('id');
+  videoSearch = getID.trim();
+  videoSearch = getID.replaceAll(' ', '_');
+  console.log(videoSearch);
+  // fetchLyrics();
+  fetchVideo(videoSearch);
 });
