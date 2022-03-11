@@ -28,6 +28,8 @@ var handleSubmission = function (event) {
   resultContainerEl.innerHTML = '';
   var search = inputEl.value.trim();
   // Checks if search is original
+  var resultsContainerEl = document.querySelector('#searchContainer');
+  resultsContainerEl.innerHTML = '';
   if (previousSearches.includes(search)) {
     search = search.replaceAll(" ", "%20");
   } else {
@@ -38,7 +40,7 @@ var handleSubmission = function (event) {
     search = search.replaceAll(" ", "%20")
   }
   inputEl.value = '';
-  createButtons();
+  createButtons()
   fetchTrackID(search);
 };
 
