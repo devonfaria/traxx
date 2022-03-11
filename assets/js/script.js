@@ -93,7 +93,6 @@ var fetchLyrics = function (trackID) {
   console.log('Fetch Lyrics called');
   // Element container to attach track information
   var trackContainerEl = document.querySelector('.track-container');
-
   // Search for lyrics URL template
   var apiLyrics = `https://devon-and-david-20220309.herokuapp.com/track.lyrics.get?track_id=${trackID}`;
 
@@ -142,22 +141,21 @@ var fetchVideo = function (searchTerms) {
 
   // Search for lyrics URL template
   var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
-
+  
   // Fetching data from Musixmatch for search results
   fetch(apiVideo)
     .then(function (response) {
       if (response.ok) {
         response.json()
           .then(function (data) {
-            console.log(data.length);
+
             // Creating video element
             var videoEl = document.createElement('iframe')
             // Adding attributes
             videoEl.classList.add('.video');
-            videoEl.src = 'https://www.youtube.com/watch?v=EDQVDCsrFAE';
+            videoEl.src = `https://www.youtube.com/watch?v=${video}`;
             // Appending elements
             trackContainerEl.append(videoEl)
-
           });
       }
     });
