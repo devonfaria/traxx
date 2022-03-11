@@ -51,7 +51,7 @@ var fetchTrackID = function (searchTerm) {
   // Element container to attach results
   var resultContainerEl = document.querySelector('#searchContainer');
   // Search track URL template
-  var apiTrackID = `https://devon-and-david-20220309.herokuapp.com/track.search?q_track=${searchTerm}&page_size=10`;
+  var apiTrackID = `https://devon-and-david-20220309.herokuapp.com/track.search?q=${searchTerm}&page_size=10`;
   // Fetching data from Musicmatch for search results; returning trackID
   fetch(apiTrackID)
     .then(function (response) {
@@ -109,6 +109,9 @@ var fetchLyrics = function (trackID) {
                 var trackHeaderEl = document.createElement('h2');
                 var trackArtistEl = document.createElement('p');
                 var trackLyricsEl = document.createElement('p');
+                var lyrics = data.lyrics_body;
+                lyrics.replaceAll('/n', '<br>')
+                console.log(lyrics);
                 // Adding classes
                 trackEl.classList.add('track');
                 trackHeaderEl.classList.add('track-header');
@@ -117,7 +120,7 @@ var fetchLyrics = function (trackID) {
                 // Adding text content - replace with data from API pull
                 trackHeaderEl.textContent = 'Toxic';
                 trackArtistEl.textContent = 'Britney Spears';
-                trackLyricsEl.textContent = 'Lorem ipsisjw iwfwjjrwijjijvjrij ivjijis djivjijvisje ijwiejgfisih sdcfaehfhsfi sifhhfisdhfi  shfhifosh hosdhgo';
+                trackLyricsEl.innerHTML = lyrics;
                 // Appending elements
                 trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
                 searchContainerEl.append(trackEl);
