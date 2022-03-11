@@ -24,6 +24,8 @@ var handleSubmissionOne = function (event) {
 var handleSubmission = function (event) {
   event.preventDefault();
   // removes HTML from results container
+  var resultContainerEl = document.querySelector('#searchContainer');
+  resultContainerEl.innerHTML = '';
   var search = inputEl.value.trim();
   // Checks if search is original
   if (previousSearches.includes(search)) {
@@ -171,7 +173,7 @@ var searchAgain = function (event) {
   var search = $(this).text();
   var searchTerm = search.replaceAll(' ', '%20');
   fetchTrackID(searchTerm);
-}
+};
 
 // Conditional to check if we are on the search results page, if so convert the search into URL format for fetchTrackID function
 if (location.pathname.includes('search-results.html')) {
@@ -182,11 +184,12 @@ if (location.pathname.includes('search-results.html')) {
 
 // BUTTON FUNCTIONALITY
 if (formEl !== null) {
-  $(document).on('submit', '#form', handleSubmission);
+  $(document).on('submit', '#form', handleSubmissionOne);
 }
 if (formOneEl !== null) {
   formOneEl.addEventListener('submit', '#formOne',handleSubmission);
 }
+
 // Prev. search buttons
 $(document).on('click', '.prevSearch', searchAgain);
 // See More Buttons
