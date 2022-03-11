@@ -126,6 +126,18 @@ var fetchLyrics = function (trackID) {
                 searchContainerEl.append(trackEl);
               }
             }
+            else {
+              var trackEl = document.createElement('div');
+              trackEl.classList.add('track', 'text-center');
+              var ohNo = document.createElement('h2');
+              var ohNoPic = document.createElement('img')
+              ohNo.classList.add('text-center');
+              ohNo.textContent = 'we\'re sorry, this song is not avalible right now';
+              ohNoPic.src = './assets/images/8.png';
+              ohNoPic.classList.add('picSize')
+              trackEl.append(ohNo, ohNoPic)
+              searchContainerEl.append(trackEl)
+            }
           }
           )
           .catch(function (err) {
