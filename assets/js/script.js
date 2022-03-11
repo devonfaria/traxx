@@ -110,7 +110,7 @@ var fetchLyrics = function (trackID) {
                 var trackArtistEl = document.createElement('p');
                 var trackLyricsEl = document.createElement('p');
                 // Adding classes
-                trackEl.classList.add('track');
+                trackEl.classList.add('track', 'text-center', 'h-100');
                 trackHeaderEl.classList.add('track-header');
                 trackArtistEl.classList.add('tract-artist');
                 trackLyricsEl.classList.add('track-text');
@@ -152,7 +152,7 @@ var fetchVideo = function (searchTerms) {
             videoEl.classList.add('video');
             videoEl.src = `https://www.youtube.com/embed/${videoId}`;
             // Appending elements
-            searchContainerEl.append(videoEl)
+            document.querySelector('.track').append(videoEl)
           });
       }
     });
@@ -165,7 +165,7 @@ var createButtons = function () {
   for (var i = 0; i < previousSearches.length; i++) {
     var buttonEl = document.createElement('button');
     buttonEl.textContent = previousSearches[i];
-    buttonEl.classList.add('prevSearch', 'btn', 'btn-outline-light', 'text', 'rounded')
+    buttonEl.classList.add('prevSearch', 'btn', 'btn-outline-light', 'text', 'rounded', 'm-2')
     buttonContainerEl.append(buttonEl);
   }
 };
