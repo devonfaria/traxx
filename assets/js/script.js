@@ -2,8 +2,23 @@ var inputEl = document.querySelector('#inputDefault');
 var formEl = document.querySelector('#form');
 var formOneEl = document.querySelector('#formOne');
 var previousSearches = JSON.parse(localStorage.getItem('trackSearches')) || [];
-var trackName;
-var artistName;
+
+// Allowing scope from fetchTrackID API pull
+function myFunction(data) {
+  console.log(this);
+  var searchContainer = document.querySelector('#searchContainer')
+  searchContainer.innerHTML = '';
+  // var videoSearch;
+  var lyricsSearch = this.track.track_id;
+  var artistName = this.track.artist_name;
+  var trackName = this.track.track_name;
+  // videoSearch = inputEl.value.trim();
+  // var getID = $(this).attr('id');
+  // videoSearch = getID.trim();
+  // videoSearch = getID.replaceAll(' ', '_');
+  fetchLyrics(trackName, artistName, lyricsSearch);
+  // fetchVideo(videoSearch);
+};
 
 // DEFINING FUNCTIONS
 var handleSubmissionOne = function (event) {
@@ -72,10 +87,12 @@ var fetchTrackID = function (searchTerm) {
               btnDivEl.classList.add('d-flex', 'justify-content-center')
               resultButtonEl.classList.add('btn', 'btn-outline-primary', 'seeMore')
               resultButtonEl.setAttribute('id', `${data[i].track.track_name} - ${data[i].track.artist_name}`);
-              resultButtonEl.setAttribute('name', data[0].track.track_id);
+              resultButtonEl.setAttribute('name', data[i].track.track_id);
               // Adding text content - replace with data from API pull
               resultHeaderEl.textContent = `${data[i].track.track_name} - ${data[i].track.artist_name}`;
               resultButtonEl.textContent = 'SEE MORE';
+              // adds scope to the myFunction global function
+              resultButtonEl.addEventListener('click', myFunction.bind(data[i]))
               // Appending elements
               btnDivEl.append(resultButtonEl);
               resultBodyEl.append(btnDivEl);
@@ -88,7 +105,7 @@ var fetchTrackID = function (searchTerm) {
 };
 
 // Searches Musixmatch API for lyric content associated with the trackID
-var fetchLyrics = function (trackID) {
+var fetchLyrics = function (track, artist, trackID) {
   console.log('Fetch Lyrics called');
   // Element container to attach track information
   var searchContainerEl = document.querySelector('#searchContainer');
@@ -97,45 +114,50 @@ var fetchLyrics = function (trackID) {
 
   // Fetching data from Musixmatch for search results
   fetch(apiLyrics)
-    .then(function (response) {
-      if (response.ok) {
-        response.json()
-          .then(function (data) {
-            console.log(data);
-            if (data.length != 0) {
-              for (var i = 0; i < 1; i++) {
-                // Creating elements on loop
-                var trackEl = document.createElement('div');
-                var trackHeaderEl = document.createElement('h2');
-                var trackArtistEl = document.createElement('p');
+  .then(function (response) {
+    if (response.ok) {
+      response.json()
+        .then(function (data) {
+          console.log(data);
+              // Creating elements on loop
+              var trackEl = document.createElement('div');
+              var trackHeaderEl = document.createElement('h2');
+              var trackArtistEl = document.createElement('p');
+              // Adding classes
+              trackEl.classList.add('track', 'text-center', 'h-100');
+              // Adding text content
+              trackHeaderEl.textContent = track;
+              trackArtistEl.textContent = artist;
+              // Appending elements
+              if (data.length != 0) {
                 var trackLyricsEl = document.createElement('p');
                 var lyrics = data.lyrics_body;
-                lyrics.replaceAll('/n', '<br>')
-                console.log(lyrics);
-                // Adding classes
-                trackEl.classList.add('track', 'text-center', 'h-100');
-                trackHeaderEl.classList.add('track-header');
-                trackArtistEl.classList.add('tract-artist');
-                trackLyricsEl.classList.add('track-text');
-                // Adding text content - replace with data from API pull
-                trackHeaderEl.textContent = 'Toxic';
-                trackArtistEl.textContent = 'Britney Spears';
                 trackLyricsEl.innerHTML = lyrics;
-                // Appending elements
-                trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
-                searchContainerEl.append(trackEl);
-              }
-            }
+                console.log(lyrics);
+              } else {
+                var trackEl = document.createElement('div');
+                trackEl.classList.add('track', 'text-center');
+                var ohNo = document.createElement('h2');
+                var ohNoPic = document.createElement('img')
+                ohNo.classList.add('text-center');
+                ohNo.textContent = "we're sorry, this song is not avalible right now";
+                ohNoPic.src = './assets/images/8.png';
+                ohNoPic.classList.add('picSize')
+                trackEl.append(ohNo, ohNoPic)
+                searchContainerEl.append(trackEl)
           }
-          )
-          .catch(function (err) {
-            console.log(err);
-          })
-      };
-    });
+          trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
+          searchContainerEl.append(trackEl);
+        }
+        )
+        .catch(function (err) {
+          console.log(err);
+        })
+    };
+  });
 };
 
-
+// Fetches Youtube video by search terms
 var fetchVideo = function (searchTerms) {
   // Element container to attach track information
   var searchContainerEl = document.querySelector('#searchContainer');
@@ -175,6 +197,8 @@ var createButtons = function () {
 
 // Function for prev. searched buttons
 var searchAgain = function (event) {
+  var resultContainerEl = document.querySelector('#searchContainer');
+  resultContainerEl.innerHTML = '';
   var search = $(this).text();
   var searchTerm = search.replaceAll(' ', '%20');
   fetchTrackID(searchTerm);
@@ -199,15 +223,17 @@ if (formEl !== null) {
 // Prev. search buttons
 $(document).on('click', '.prevSearch', searchAgain);
 // See More Buttons
-$(document).on('click', '.seeMore', function () {
-  var searchContainer = document.querySelector('#searchContainer')
-  searchContainer.innerHTML = '';
-  var videoSearch;
-  var lyricsSearch = $(this).attr('name');
-  videoSearch = inputEl.value.trim();
-  var getID = $(this).attr('id');
-  videoSearch = getID.trim();
-  videoSearch = getID.replaceAll(' ', '_');
-  fetchLyrics(lyricsSearch);
-  fetchVideo(videoSearch);
-});
+// $(document).on('click', '.seeMore', function () {
+//   var searchContainer = document.querySelector('#searchContainer')
+//   searchContainer.innerHTML = '';
+//   var videoSearch;
+//   var trackName;
+//   var artistName;
+//   var lyricsSearch = $(this).attr('name');
+//   videoSearch = inputEl.value.trim();
+//   var getID = $(this).attr('id');
+//   videoSearch = getID.trim();
+//   videoSearch = getID.replaceAll(' ', '_');
+//   // fetchLyrics(trackName, artistName, lyricsSearch);
+//   fetchVideo(videoSearch);
+// });
