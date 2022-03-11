@@ -48,7 +48,6 @@ var handleSubmission = function (event) {
 
 // SEARCH FOR RESULTS
 var fetchTrackID = function (searchTerm) {
-  console.log('fetchTrackID called');
   // Element container to attach results
   var resultContainerEl = document.querySelector('#searchContainer');
   // Search track URL template
@@ -73,6 +72,7 @@ var fetchTrackID = function (searchTerm) {
               btnDivEl.classList.add('d-flex', 'justify-content-center')
               resultButtonEl.classList.add('btn', 'btn-outline-primary', 'seeMore')
               resultButtonEl.setAttribute('id', `${data[i].track.track_name} - ${data[i].track.artist_name}`);
+              resultButtonEl.setAttribute('name', data[0].track.track_id);
               // Adding text content - replace with data from API pull
               resultHeaderEl.textContent = `${data[i].track.track_name} - ${data[i].track.artist_name}`;
               resultButtonEl.textContent = 'SEE MORE';
@@ -82,7 +82,6 @@ var fetchTrackID = function (searchTerm) {
               resultEl.append(resultHeaderEl, resultBodyEl);
               resultContainerEl.append(resultEl)
             };
-            // fetchLyrics(data[0].track.track_id)
           });
       }
     });
@@ -92,7 +91,7 @@ var fetchTrackID = function (searchTerm) {
 var fetchLyrics = function (trackID) {
   console.log('Fetch Lyrics called');
   // Element container to attach track information
-  var trackContainerEl = document.querySelector('.track-container');
+  var searchContainerEl = document.querySelector('#searchContainer');
   // Search for lyrics URL template
   var apiLyrics = `https://devon-and-david-20220309.herokuapp.com/track.lyrics.get?track_id=${trackID}`;
 
@@ -104,7 +103,7 @@ var fetchLyrics = function (trackID) {
           .then(function (data) {
             console.log(data);
             if (data.length != 0) {
-              for (var i = 0; i < data.length; i++) {
+              for (var i = 0; i < 1; i++) {
                 // Creating elements on loop
                 var trackEl = document.createElement('div');
                 var trackHeaderEl = document.createElement('h2');
@@ -121,44 +120,39 @@ var fetchLyrics = function (trackID) {
                 trackLyricsEl.textContent = 'Lorem ipsisjw iwfwjjrwijjijvjrij ivjijis djivjijvisje ijwiejgfisih sdcfaehfhsfi sifhhfisdhfi  shfhifosh hosdhgo';
                 // Appending elements
                 trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
-                trackContainerEl.append(trackEl);
+                searchContainerEl.append(trackEl);
               }
             }
-          }.catch(function (err) {
+          }
+          )
+          .catch(function (err) {
             console.log(err);
-          }))
+          })
       };
     });
-}
+};
 
 
 var fetchVideo = function (searchTerms) {
-  console.log('Fetch Video called');
   // Element container to attach track information
-  var trackContainerEl = document.querySelector('.track-container');
-
-  // Need variable to pass into Youtube search function
-
+  var searchContainerEl = document.querySelector('#searchContainer');
   // Search for lyrics URL template
   var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}&key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
 
   // Fetching data from Musixmatch for search results
-  console.log(apiVideo)
   fetch(apiVideo)
     .then(function (response) {
       if (response.ok) {
         response.json()
           .then(function (data) {
             var videoId = data.items[0].id.videoId
-            console.log(data.items[0].id.videoId);
             // Creating video element
             var videoEl = document.createElement('iframe')
             // Adding attributes
-            videoEl.classList.add('.video');
+            videoEl.classList.add('video');
             videoEl.src = `https://www.youtube.com/embed/${videoId}`;
-            console.log(videoEl.src)
             // Appending elements
-            trackContainerEl.append(videoEl)
+            searchContainerEl.append(videoEl)
           });
       }
     });
@@ -206,11 +200,11 @@ $(document).on('click', '.seeMore', function () {
   var searchContainer = document.querySelector('#searchContainer')
   searchContainer.innerHTML = '';
   var videoSearch;
+  var lyricsSearch = $(this).attr('name');
   videoSearch = inputEl.value.trim();
   var getID = $(this).attr('id');
   videoSearch = getID.trim();
   videoSearch = getID.replaceAll(' ', '_');
-  console.log(videoSearch);
-  // fetchLyrics();
+  fetchLyrics(lyricsSearch);
   fetchVideo(videoSearch);
 });
