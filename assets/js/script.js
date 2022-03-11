@@ -26,6 +26,8 @@ var handleSubmission = function (event) {
   // removes HTML from results container
   var search = inputEl.value.trim();
   // Checks if search is original
+  var resultsContainerEl = document.querySelector('#searchContainer');
+  resultsContainerEl.innerHTML = '';
   if (previousSearches.includes(search)) {
     search = search.replaceAll(" ", "%20");
   } else {
@@ -35,6 +37,8 @@ var handleSubmission = function (event) {
     localStorage.setItem('trackSearches', storage);
     search = search.replaceAll(" ", "%20")
   }
+  inputEl.value = '';
+  createButtons()
   fetchTrackID(search);
 };
 
@@ -158,6 +162,7 @@ var fetchVideo = function (searchTerms) {
 // STARTING PAGE CONDITIONS
 var createButtons = function () {
   var buttonContainerEl = document.querySelector('.button-container');
+  buttonContainerEl.innerHTML = '';
   for (var i = 0; i < previousSearches.length; i++) {
     var buttonEl = document.createElement('button');
     buttonEl.textContent = previousSearches[i];
