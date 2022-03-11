@@ -119,12 +119,12 @@ var fetchLyrics = function (trackID) {
                 trackContainerEl.append(trackEl);
               }
             }
-          } .catch(function (err) {
+          }.catch(function (err) {
             console.log(err);
           }))
-            };
-          });
-      }
+      };
+    });
+}
 
 
 var fetchVideo = function (searchTerms) {
@@ -163,7 +163,7 @@ var createButtons = function () {
   for (var i = 0; i < previousSearches.length; i++) {
     var buttonEl = document.createElement('button');
     buttonEl.textContent = previousSearches[i];
-    buttonEl.classList.add('prevSearch')
+    buttonEl.classList.add('prevSearch', 'btn', 'btn-outline-light', 'text', 'rounded')
     buttonContainerEl.append(buttonEl);
   }
 };
@@ -183,11 +183,12 @@ if (location.pathname.includes('search-results.html')) {
 };
 
 // BUTTON FUNCTIONALITY
-if (formEl !== null) {
-  $(document).on('submit', '#form', handleSubmissionOne);
-}
 if (formOneEl !== null) {
-  formOneEl.addEventListener('submit', '#formOne',handleSubmission);
+  formOneEl.addEventListener('submit', handleSubmission);
+}
+
+if (formEl !== null) {
+  formEl.addEventListener('submit', handleSubmissionOne);
 }
 
 // Prev. search buttons
