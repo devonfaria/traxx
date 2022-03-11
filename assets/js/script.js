@@ -140,20 +140,23 @@ var fetchVideo = function (searchTerms) {
   // Need variable to pass into Youtube search function
 
   // Search for lyrics URL template
-  var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
-  
+  var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}&key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
+
   // Fetching data from Musixmatch for search results
+  console.log(apiVideo)
   fetch(apiVideo)
     .then(function (response) {
       if (response.ok) {
         response.json()
           .then(function (data) {
-
+            var videoId = data.items[0].id.videoId
+            console.log(data.items[0].id.videoId);
             // Creating video element
             var videoEl = document.createElement('iframe')
             // Adding attributes
             videoEl.classList.add('.video');
-            videoEl.src = `https://www.youtube.com/watch?v=${video}`;
+            videoEl.src = `https://www.youtube.com/embed/${videoId}`;
+            console.log(videoEl.src)
             // Appending elements
             trackContainerEl.append(videoEl)
           });
@@ -200,7 +203,8 @@ if (formEl !== null) {
 $(document).on('click', '.prevSearch', searchAgain);
 // See More Buttons
 $(document).on('click', '.seeMore', function () {
-  console.log('See more clicked!')
+  var searchContainer = document.querySelector('#searchContainer')
+  searchContainer.innerHTML = '';
   var videoSearch;
   videoSearch = inputEl.value.trim();
   var getID = $(this).attr('id');
