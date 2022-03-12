@@ -123,50 +123,6 @@ var fetchLyrics = function (track, artist, trackID) {
   var apiLyrics = `https://devon-and-david-20220309.herokuapp.com/track.lyrics.get?track_id=${trackID}`;
 
   // Fetching data from Musixmatch for search results
-<<<<<<< HEAD
-  fetch(apiLyrics).then(function (response) {
-    if (response.ok) {
-      response
-        .json()
-        .then(function (data) {
-          console.log(data);
-          // Creating elements on loop
-          var trackEl = document.createElement("div");
-          var trackHeaderEl = document.createElement("h2");
-          var trackArtistEl = document.createElement("p");
-          // Adding classes
-          trackEl.classList.add("track", "text-center", "h-100");
-          // Adding text content
-          trackHeaderEl.textContent = track;
-          trackArtistEl.textContent = artist;
-          // Appending elements
-          if (data.length != 0) {
-            var trackLyricsEl = document.createElement("p");
-            var lyrics = data.lyrics_body;
-            trackLyricsEl.innerHTML = lyrics;
-            console.log(lyrics);
-          } else {
-            var trackEl = document.createElement("div");
-            trackEl.classList.add("track", "text-center");
-            var ohNo = document.createElement("h2");
-            var ohNoPic = document.createElement("img");
-            ohNo.classList.add("text-center");
-            ohNo.textContent =
-              "we're sorry, this song is not avalible right now";
-            ohNoPic.src = "./assets/images/8.png";
-            ohNoPic.classList.add("picSize");
-            trackEl.append(ohNo, ohNoPic);
-            searchContainerEl.append(trackEl);
-          }
-          trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
-          searchContainerEl.append(trackEl);
-        })
-        .catch(function (err) {
-          console.log(err);
-        });
-    }
-  });
-=======
   fetch(apiLyrics)
     .then(function (response) {
       if (response.ok) {
@@ -209,7 +165,6 @@ var fetchLyrics = function (track, artist, trackID) {
           })
       };
     });
->>>>>>> main
 };
 
 // Fetches Youtube video by search terms
