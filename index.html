@@ -2,11 +2,12 @@
 <html lang="en">
 
 <head>
+  <!-- Meta Tags -->
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
+<!-- Title, Stylesheets and Favicon Icons. -->
   <title>Traxx - Music Search Software</title>
   <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/css/style.css">
@@ -15,15 +16,19 @@
   <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
 </head>
 
+<!-- Body has vh-100 to allow contents to take up the full page -->
 <body class="vh-100 d-flex flex-column">
+  <!-- Background Video -->
   <video id="background-video" autoplay loop muted poster="./assets/images/pexels-crazy-motions-8733062.mp4">
     <source src="./assets/images/pexels-crazy-motions-8733062.mp4" type="video/mp4">
   </video>
+  <!-- Page Header -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid justify-content-center">
       <h1 class="navbar-brand" href="#">Traxx - Music Search Software</a>
     </div>
   </nav>
+  <!-- Search card, includes button and input -->
   <div class="container-fluid d-flex h-100 align-items-center justify-content-center">
     <div class="card text-white bg-dark rounded" style="width: 50%;">
       <form id="form">
@@ -40,6 +45,7 @@
       </form>
     </div>
   </div>
+  <!-- Javascript and Jquery tags -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>

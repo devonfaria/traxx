@@ -1,11 +1,14 @@
+/* Sets viewport height to 100 */
 .vh-100 {
   min-height: 100vh;
 }
 
+/* gives rounded borders */
 .rounded {
   border-radius: 0.6rem !important;
 }
 
+/* Id for background-video styling */
 #background-video {
   width: 100vw;
   height: 100vh;
@@ -17,19 +20,22 @@
   bottom: 0;
   z-index: -1;
 }
-
+/* Changes heading fontsize */
 .cardHead {
   font-size: 24px;
 }
 
+/* Changes Lyrics font size */
 .cardLyrics {
   font-size: 16px;
 }
 
+/* Takes out underline in hyperlinks */
 a {
   text-decoration: none;
 }
 
+/* Resizes videos */
 .video {
   width: 75%;
   height: 50%
