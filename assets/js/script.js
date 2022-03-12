@@ -8,27 +8,17 @@ var previousSearches = JSON.parse(localStorage.getItem("trackSearches")) || [];
 // Allowing scope from fetchTrackID API pull
 function myFunction(data) {
   console.log(this);
-<<<<<<< HEAD
-  var searchContainer = document.querySelector('#searchContainer')
-  searchContainer.innerHTML = '';
-=======
   var searchContainer = document.querySelector("#searchContainer");
   searchContainer.innerHTML = "";
   // var videoSearch;
->>>>>>> main
   var lyricsSearch = this.track.track_id;
   var artistName = this.track.artist_name;
   var trackName = this.track.track_name;
   var getID = `${this.track.track_name} ${this.track.artist_name}`;
   var videoSearch = getID.replaceAll(' ', '_');
   fetchLyrics(trackName, artistName, lyricsSearch);
-<<<<<<< HEAD
   fetchVideo(videoSearch);
 };
-=======
-  // fetchVideo(videoSearch);
-}
->>>>>>> main
 
 // DEFINING FUNCTIONS
 
@@ -81,44 +71,6 @@ var fetchTrackID = function (searchTerm) {
   // Search track URL template
   var apiTrackID = `https://devon-and-david-20220309.herokuapp.com/track.search?q=${searchTerm}&page_size=10`;
   // Fetching data from Musicmatch for search results; returning trackID
-<<<<<<< HEAD
-  fetch(apiTrackID)
-    .then(function (response) {
-      if (response.ok) {
-        response.json()
-          .then(function (data) {
-            console.log(data);
-            for (var i = 0; i < data.length; i++) {
-              console.log('Loop initiated');
-              // Creating elements on loop
-              var resultEl = document.createElement('div');
-              var resultHeaderEl = document.createElement('h2');
-              var resultBodyEl = document.createElement('div');
-              var btnDivEl = document.createElement('div');
-              var resultButtonEl = document.createElement('button');
-              // Adding classes
-              resultEl.classList.add('card', 'border-primary', 'my-3');
-              resultHeaderEl.classList.add('card-header', 'cardHead', 'text-center');
-              resultBodyEl.classList.add('card-body');
-              btnDivEl.classList.add('d-flex', 'justify-content-center')
-              resultButtonEl.classList.add('btn', 'btn-outline-primary', 'seeMore')
-              resultButtonEl.setAttribute('id', `${data[i].track.track_name} - ${data[i].track.artist_name}`);
-              resultButtonEl.setAttribute('name', data[i].track.track_id);
-              // Adding text content - replace with data from API pull
-              resultHeaderEl.textContent = `${data[i].track.track_name} - ${data[i].track.artist_name}`;
-              resultButtonEl.textContent = 'SEE MORE';
-              // adds scope to the myFunction global function
-              resultButtonEl.addEventListener('click', myFunction.bind(data[i]))
-              // Appending elements
-              btnDivEl.append(resultButtonEl);
-              resultBodyEl.append(btnDivEl);
-              resultEl.append(resultHeaderEl, resultBodyEl);
-              resultContainerEl.append(resultEl)
-            };
-          });
-      }
-    });
-=======
   fetch(apiTrackID).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
@@ -158,7 +110,6 @@ var fetchTrackID = function (searchTerm) {
       });
     }
   });
->>>>>>> main
 };
 
 // Searches Musixmatch API for lyric content associated with the trackID
@@ -181,6 +132,8 @@ var fetchLyrics = function (track, artist, trackID) {
             var trackArtistEl = document.createElement('p');
             // Adding classes
             trackEl.classList.add('track', 'text-center', 'h-100');
+            trackHeaderEl.classList.add('mt-4');
+            trackArtistEl.classList.add('artist');
             // Adding text content
             trackHeaderEl.textContent = track;
             trackArtistEl.textContent = artist;
@@ -189,7 +142,9 @@ var fetchLyrics = function (track, artist, trackID) {
               var trackLyricsEl = document.createElement('p');
               var lyrics = data.lyrics_body;
               trackLyricsEl.innerHTML = lyrics;
+              trackLyricsEl.classList.add('mx-5', 'mb-5');
               console.log(lyrics);
+              trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
             } else {
               var trackEl = document.createElement('div');
               trackEl.classList.add('track', 'text-center');
@@ -199,11 +154,9 @@ var fetchLyrics = function (track, artist, trackID) {
               ohNo.textContent = "we're sorry, lyrics for this song are not avalible";
               ohNoPic.src = './assets/images/8.png';
               ohNoPic.classList.add('picSize')
+              trackEl.append(trackHeaderEl, trackArtistEl, ohNo, ohNoPic);
             }
-            trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
             searchContainerEl.append(trackEl);
-            trackEl.append(ohNo, ohNoPic)
-            searchContainerEl.append(trackEl)
           }
           )
           .catch(function (err) {
@@ -215,26 +168,27 @@ var fetchLyrics = function (track, artist, trackID) {
 
 // Fetches Youtube video by search terms
 var fetchVideo = function (searchTerms) {
-<<<<<<< HEAD
-=======
-  // Element container to attach track information
-  var searchContainerEl = document.querySelector("#searchContainer");
->>>>>>> main
   // Search for lyrics URL template
+  var videoDiv = document.createElement('div');
   var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}&key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
+
+  videoDiv.classList.add('embed-responsive', 'embed-responsive-16by9')
 
   // Fetching data from Musixmatch for search results
   fetch(apiVideo).then(function (response) {
     if (response.ok) {
       response.json().then(function (data) {
+        var trackContainerEl = document.querySelector(".track");
         var videoId = data.items[0].id.videoId;
         // Creating video element
         var videoEl = document.createElement("iframe");
         // Adding attributes
-        videoEl.classList.add("video");
+        videoEl.classList.add('embed-responsive-item', 'video');
+        videoEl.setAttribute('allowfullscreen', '');
         videoEl.src = `https://www.youtube.com/embed/${videoId}`;
         // Appending elements
-        document.querySelector(".track").append(videoEl);
+        videoDiv.append(videoEl);
+        trackContainerEl.append(videoDiv);
       });
     }
   });
