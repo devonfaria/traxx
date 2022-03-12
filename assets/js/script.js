@@ -8,16 +8,13 @@ function myFunction(data) {
   console.log(this);
   var searchContainer = document.querySelector('#searchContainer')
   searchContainer.innerHTML = '';
-  // var videoSearch;
   var lyricsSearch = this.track.track_id;
   var artistName = this.track.artist_name;
   var trackName = this.track.track_name;
-  // videoSearch = inputEl.value.trim();
-  // var getID = $(this).attr('id');
-  // videoSearch = getID.trim();
-  // videoSearch = getID.replaceAll(' ', '_');
+  var getID = `${this.track.track_name} ${this.track.artist_name}`;
+  var videoSearch = getID.replaceAll(' ', '_');
   fetchLyrics(trackName, artistName, lyricsSearch);
-  // fetchVideo(videoSearch);
+  fetchVideo(videoSearch);
 };
 
 // DEFINING FUNCTIONS
@@ -73,7 +70,9 @@ var fetchTrackID = function (searchTerm) {
       if (response.ok) {
         response.json()
           .then(function (data) {
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
+              console.log('Loop initiated');
               // Creating elements on loop
               var resultEl = document.createElement('div');
               var resultHeaderEl = document.createElement('h2');
@@ -111,7 +110,6 @@ var fetchLyrics = function (track, artist, trackID) {
   var searchContainerEl = document.querySelector('#searchContainer');
   // Search for lyrics URL template
   var apiLyrics = `https://devon-and-david-20220309.herokuapp.com/track.lyrics.get?track_id=${trackID}`;
-
   // Fetching data from Musixmatch for search results
   fetch(apiLyrics)
   .then(function (response) {
@@ -133,12 +131,9 @@ var fetchLyrics = function (track, artist, trackID) {
                 var trackLyricsEl = document.createElement('p');
                 var lyrics = data.lyrics_body;
                 trackLyricsEl.innerHTML = lyrics;
-                console.log(lyrics);
               } else {
-                var trackEl = document.createElement('div');
-                trackEl.classList.add('track', 'text-center');
                 var ohNo = document.createElement('h2');
-                var ohNoPic = document.createElement('img')
+                var ohNoPic = document.createElement('img');
                 ohNo.classList.add('text-center');
                 ohNo.textContent = "we're sorry, this song is not avalible right now";
                 ohNoPic.src = './assets/images/8.png';
@@ -159,8 +154,6 @@ var fetchLyrics = function (track, artist, trackID) {
 
 // Fetches Youtube video by search terms
 var fetchVideo = function (searchTerms) {
-  // Element container to attach track information
-  var searchContainerEl = document.querySelector('#searchContainer');
   // Search for lyrics URL template
   var apiVideo = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=${searchTerms}&key=AIzaSyBjmcNPYyG9kBMKxEBBj5x6rjJ4yvMj18g`;
 
