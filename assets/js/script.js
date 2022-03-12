@@ -4,6 +4,7 @@ var formEl = document.querySelector("#form");
 var formOneEl = document.querySelector("#formOne");
 var previousSearches = JSON.parse(localStorage.getItem("trackSearches")) || [];
 
+
 // Allowing scope from fetchTrackID API pull
 function myFunction(data) {
   console.log(this);
@@ -122,6 +123,7 @@ var fetchLyrics = function (track, artist, trackID) {
   var apiLyrics = `https://devon-and-david-20220309.herokuapp.com/track.lyrics.get?track_id=${trackID}`;
 
   // Fetching data from Musixmatch for search results
+<<<<<<< HEAD
   fetch(apiLyrics).then(function (response) {
     if (response.ok) {
       response
@@ -164,6 +166,50 @@ var fetchLyrics = function (track, artist, trackID) {
         });
     }
   });
+=======
+  fetch(apiLyrics)
+    .then(function (response) {
+      if (response.ok) {
+        response.json()
+          .then(function (data) {
+            console.log(data);
+            // Creating elements on loop
+            var trackEl = document.createElement('div');
+            var trackHeaderEl = document.createElement('h2');
+            var trackArtistEl = document.createElement('p');
+            // Adding classes
+            trackEl.classList.add('track', 'text-center', 'h-100');
+            // Adding text content
+            trackHeaderEl.textContent = track;
+            trackArtistEl.textContent = artist;
+            // Appending elements
+            if (data.length != 0) {
+              var trackLyricsEl = document.createElement('p');
+              var lyrics = data.lyrics_body;
+              trackLyricsEl.innerHTML = lyrics;
+              console.log(lyrics);
+            } else {
+              var trackEl = document.createElement('div');
+              trackEl.classList.add('track', 'text-center');
+              var ohNo = document.createElement('h2');
+              var ohNoPic = document.createElement('img')
+              ohNo.classList.add('text-center');
+              ohNo.textContent = "we're sorry, lyrics for this song are not avalible";
+              ohNoPic.src = './assets/images/8.png';
+              ohNoPic.classList.add('picSize')
+            }
+            trackEl.append(trackHeaderEl, trackArtistEl, trackLyricsEl);
+            searchContainerEl.append(trackEl);
+            trackEl.append(ohNo, ohNoPic)
+            searchContainerEl.append(trackEl)
+          }
+          )
+          .catch(function (err) {
+            console.log(err);
+          })
+      };
+    });
+>>>>>>> main
 };
 
 // Fetches Youtube video by search terms
