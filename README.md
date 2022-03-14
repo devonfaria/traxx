@@ -21,7 +21,7 @@ With algorithms on common search software like Google and Youtube prioritizing d
 
 Our program uses three API calls to generate your results. First, it will search the Musixmatch database for tracks that fit your search criteria. The landing page will then switch to a results page with ten of the most relevant tracks. Once one result is chosen, we run an API fetch to get lyrics from Musixmatch, if present. It will also run an API fetch on Youtube to find the cooresponding video ID so we can generate an embedded video of the result chosen. 
 
-The track page will display the track name, artist, a portion of the lyrics if available, and the cooresponding Youtube video embedded in the track page. SOme Youtube videos will have restrictions that will not allow them to be embedded to our program, but the link will bring you to the video regardless.
+The track page will display the track name, artist, a portion of the lyrics if available, and the cooresponding Youtube video embedded in the track page. Some Youtube videos will have restrictions that will not allow them to be embedded to our program, but the link will bring you to the video regardless.
 
 Once a search has been initiated, the program will save the search query in localStorage so that it can generate previous searches as buttons to re-run a search easily.
 
@@ -38,6 +38,10 @@ Once a search query is submitted, you will see the page change to this search pa
 Once a 'See more' button is chosen on a particular result, the page will then display the track-related material in this format. 
 
 ![alt text](./assets/images/Traxx-trackpage.png)
+
+If lyrics are not found upon initial search, then the following inamge will be displayed on the track page.  
+
+![alt text](./assets/images/Traxx_error.png)
 
 ## Support
 
