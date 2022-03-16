@@ -8,6 +8,8 @@
 
 * [Description](#description)
 * [Visuals](#visuals)
+* [Technologies](#technologies)
+* [Licenses](#licenses)
 * [Support](#support)
 * [Roadmap](#roadmap)
 * [Authors](#authors)
@@ -29,19 +31,37 @@ Once a search has been initiated, the program will save the search query in loca
 
 The following layout is the landing page you can expect to see on your browser.
 
-![alt text](./assets/images/Traxx-Main.png)
+![main page of traxx](./assets/images/Traxx-Main.png)
 
 Once a search query is submitted, you will see the page change to this search page with ten results.
 
-![alt text](./assets/images/Traxx-searchpage.png)
+![search page of traxx](./assets/images/Traxx-searchpage.png)
 
 Once a 'See more' button is chosen on a particular result, the page will then display the track-related material in this format. 
 
-![alt text](./assets/images/Traxx-trackpage.png)
+![track page of traxx](./assets/images/Traxx-trackpage.png)
 
 If lyrics are not found upon initial search, then the following inamge will be displayed on the track page.  
 
-![alt text](./assets/images/Traxx_error.png)
+![no lyrics error on search](./assets/images/Traxx_error.png)
+
+## Technologies
+
+* Musixmatch API
+* Youtube API
+* Bootstrap
+
+## Licenses
+
+The MIT License (MIT)
+
+Copyright (c) 2022 Devon Faria
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## Support
 
